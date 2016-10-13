@@ -2,12 +2,13 @@
 using System.Collections;
 
 [RequireComponent (typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour {
+public class Enemy : LivingEntity {
 
 	NavMeshAgent pathfiner;
 	Transform target;
 
-	void Start () {
+	protected override void Start () {
+		base.Start ();
 		pathfiner = GetComponent<NavMeshAgent> ();
 		target = GameObject.FindGameObjectWithTag ("Player").transform;
 		StartCoroutine (UpdatePath());
@@ -21,7 +22,9 @@ public class Enemy : MonoBehaviour {
 		float refreshRate = 0.25f;
 		while (target != null) {
 			Vector3 targetPostion = new Vector3 (target.position.x, 0, target.position.z);
-			pathfiner.SetDestination (targetPostion);
+			if (!dead) {
+				pathfiner.SetDestination (targetPostion);
+			}
 			yield return new WaitForSeconds (refreshRate);
 		}
 	}

@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour {
 		transform.LookAt (fixedLookPoint);
 	}
 
-	public void FixedUpdate() {
+	void FixedUpdate() {
 		rb.MovePosition (rb.position + velocity * Time.fixedDeltaTime);
 	}
 
